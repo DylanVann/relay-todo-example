@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"yarn dev:vite\" \"yarn dev:relay\"",
-    "dev:vite": "vite",
+    "dev": "concurrently yarn:dev:*",
+    "dev:vite": "vite --clearScreen false",
+    "dev:tsc": "tsc --watch",
     "dev:relay": "yarn build:relay --watch",
     "build": "yarn build:tsc && yarn build:relay && yarn build:vite",
     "build:tsc": "tsc",

@@ -11,7 +11,10 @@ export interface TodoRootProps {
 export default function TodoRoot(props: TodoRootProps) {
   const data = usePreloadedQuery<TodoRootQuery>(
     graphql`
-      query TodoRootQuery($id: ID!) {
+      query TodoRootQuery($id: ID!, $userId: String!) {
+        user(id: $userId) {
+          ...Todo_user
+        }
         node(id: $id) {
           ...Todo_todo
         }
@@ -20,5 +23,9 @@ export default function TodoRoot(props: TodoRootProps) {
     props.prepared.query,
   )
 
-  return <Todo todo={data.node} />
+  if (!data.user || !data.node) {
+    throw new Error('No user')
+  }
+
+  return <Todo todo={data.node} user={data.user} />
 }

@@ -5,12 +5,19 @@ import {
   RecordSourceSelectorProxy,
 } from 'relay-runtime'
 import { RemoveTodoMutation } from './__generated__/RemoveTodoMutation.graphql'
-import { TodoListItem_user } from '../components/__generated__/TodoListItem_user.graphql'
-import { TodoListItem_todo } from '../components/__generated__/TodoListItem_todo.graphql'
+
+interface User {
+  id: string
+  userId: string
+}
+
+interface Todo {
+  id: string
+}
 
 function sharedUpdater(
   store: RecordSourceSelectorProxy,
-  user: TodoListItem_user,
+  user: User,
   deletedID: string,
 ) {
   const userProxy = store.get(user.id)
@@ -18,11 +25,7 @@ function sharedUpdater(
   ConnectionHandler.deleteNode(conn!, deletedID)
 }
 
-function commit(
-  environment: Environment,
-  todo: TodoListItem_todo,
-  user: TodoListItem_user,
-) {
+function commit(environment: Environment, todo: Todo, user: User) {
   return commitMutation<RemoveTodoMutation>(environment, {
     mutation: graphql`
       mutation RemoveTodoMutation($input: RemoveTodoInput!) {

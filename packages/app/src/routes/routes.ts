@@ -36,6 +36,7 @@ const routes: Route[] = [
           return {
             query: loadQuery(RelayEnvironment, TodoRootQuery, {
               id: params.id,
+              userId: 'me',
             }),
           }
         },

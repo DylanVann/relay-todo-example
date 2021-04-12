@@ -6,8 +6,12 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type TodoRootQueryVariables = {
     id: string;
+    userId: string;
 };
 export type TodoRootQueryResponse = {
+    readonly user: {
+        readonly " $fragmentRefs": FragmentRefs<"Todo_user">;
+    } | null;
     readonly node: {
         readonly " $fragmentRefs": FragmentRefs<"Todo_todo">;
     } | null;
@@ -22,7 +26,12 @@ export type TodoRootQuery = {
 /*
 query TodoRootQuery(
   $id: ID!
+  $userId: String!
 ) {
+  user(id: $userId) {
+    ...Todo_user
+    id
+  }
   node(id: $id) {
     __typename
     ...Todo_todo
@@ -33,6 +42,14 @@ query TodoRootQuery(
 fragment Todo_todo on Todo {
   id
   text
+  complete
+}
+
+fragment Todo_user on User {
+  id
+  userId
+  totalCount
+  completedCount
 }
 */
 
@@ -42,15 +59,34 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "id"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "userId"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
     "name": "id",
+    "variableName": "userId"
+  }
+],
+v2 = [
+  {
+    "kind": "Variable",
+    "name": "id",
     "variableName": "id"
   }
-];
+],
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -61,6 +97,22 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
+        "concreteType": "User",
+        "kind": "LinkedField",
+        "name": "user",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "Todo_user"
+          }
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": (v2/*: any*/),
         "concreteType": null,
         "kind": "LinkedField",
         "name": "node",
@@ -87,6 +139,39 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
+        "concreteType": "User",
+        "kind": "LinkedField",
+        "name": "user",
+        "plural": false,
+        "selections": [
+          (v3/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "userId",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "totalCount",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "completedCount",
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": (v2/*: any*/),
         "concreteType": null,
         "kind": "LinkedField",
         "name": "node",
@@ -99,13 +184,7 @@ return {
             "name": "__typename",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          },
+          (v3/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
@@ -114,6 +193,13 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "text",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "complete",
                 "storageKey": null
               }
             ],
@@ -126,14 +212,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4b8d170999fbed49602c819c6d5f7907",
+    "cacheID": "78aea362e53fcdea08fd97cf154cade5",
     "id": null,
     "metadata": {},
     "name": "TodoRootQuery",
     "operationKind": "query",
-    "text": "query TodoRootQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...Todo_todo\n    id\n  }\n}\n\nfragment Todo_todo on Todo {\n  id\n  text\n}\n"
+    "text": "query TodoRootQuery(\n  $id: ID!\n  $userId: String!\n) {\n  user(id: $userId) {\n    ...Todo_user\n    id\n  }\n  node(id: $id) {\n    __typename\n    ...Todo_todo\n    id\n  }\n}\n\nfragment Todo_todo on Todo {\n  id\n  text\n  complete\n}\n\nfragment Todo_user on User {\n  id\n  userId\n  totalCount\n  completedCount\n}\n"
   }
 };
 })();
-(node as any).hash = 'a88efbcd6dda4c44e70f6e38b5a0600b';
+(node as any).hash = '38222a1a765b89d39e7021707d75c41d';
 export default node;

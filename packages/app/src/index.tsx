@@ -6,16 +6,11 @@ import RoutingContext from './router/RoutingContext'
 import createRouter from './router/createRouter'
 import routes from './routes/routes'
 import RouterRenderer from './router/RouteRenderer'
-import { setup } from 'twind'
-import { withForms } from '@twind/forms'
-import typography from '@twind/typography'
+import { setupTwind } from './setupTwind'
+
+setupTwind()
 
 const router = createRouter(routes)
-
-setup({
-  preflight: withForms(),
-  plugins: { ...typography() },
-})
 
 render(
   <StrictMode>

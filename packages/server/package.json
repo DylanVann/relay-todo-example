@@ -3,7 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "nodemon --exec babel-node src/index.js",
+    "build": "babel src --out-dir dist",
+    "dev": "concurrently yarn:dev:*",
+    "dev:babel": "yarn build --watch",
+    "dev:server": "wait-on dist/index.js && nodemon dist/index.js",
     "update-schema": "babel-node scripts/updateSchema.js"
   },
   "dependencies": {

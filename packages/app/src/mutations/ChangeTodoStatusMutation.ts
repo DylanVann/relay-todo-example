@@ -4,11 +4,17 @@ import { TodoListItem_todo } from '../components/__generated__/TodoListItem_todo
 import { ChangeTodoStatusMutation } from './__generated__/ChangeTodoStatusMutation.graphql'
 import { TodoListItem_user } from '../components/__generated__/TodoListItem_user.graphql'
 
-function getOptimisticResponse(
-  complete: boolean,
-  todo: TodoListItem_todo,
-  user: TodoListItem_user,
-) {
+interface User {
+  id: string
+  userId: string
+  completedCount: number
+}
+
+interface Todo {
+  id: string
+}
+
+function getOptimisticResponse(complete: boolean, todo: Todo, user: User) {
   const userPayload: { id: string; completedCount: number } = {
     id: user.id,
     completedCount: 0,
@@ -32,8 +38,8 @@ function getOptimisticResponse(
 function commit(
   environment: Environment,
   complete: boolean,
-  todo: TodoListItem_todo,
-  user: TodoListItem_user,
+  todo: Todo,
+  user: User,
 ) {
   return commitMutation<ChangeTodoStatusMutation>(environment, {
     mutation: graphql`

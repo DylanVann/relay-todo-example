@@ -5,9 +5,10 @@
     "packages/*"
   ],
   "scripts": {
+    "build": "wsrun build",
     "ws:server": "yarn workspace server",
     "ws:app": "yarn workspace app",
-    "dev": "concurrently \"yarn dev:server\" \"yarn dev:app\"",
+    "dev": "concurrently yarn:dev:*",
     "dev:server": "yarn ws:server dev",
     "dev:app": "wait-on tcp:4000 && yarn ws:app dev",
     "postinstall": "patch-package"

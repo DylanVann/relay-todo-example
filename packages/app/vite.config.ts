@@ -74,6 +74,9 @@ export default defineConfig({
     global: 'window',
     'process.env.NODE_ENV': JSON.stringify('development'),
   },
+  build: {
+    minify: 'esbuild',
+  },
   server: {
     proxy: {
       '/graphql': {

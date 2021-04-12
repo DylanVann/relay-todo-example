@@ -8,6 +8,7 @@ import { TodoListItem_todo$key } from './__generated__/TodoListItem_todo.graphql
 import { TodoListItem_user$key } from './__generated__/TodoListItem_user.graphql'
 import Link from '../router/Link'
 import { tw } from 'twind'
+import Button from './Button'
 
 export interface TodoListItemProps {
   todo: TodoListItem_todo$key
@@ -69,23 +70,23 @@ export default function TodoListItem(props: TodoListItemProps) {
     RenameTodoMutation.commit(environment, text, todo)
   }
 
-  function removeTodo() {
+  const removeTodo = () => {
     RemoveTodoMutation.commit(environment, todo, user)
   }
 
   return (
     <li className={tw`border p-1 flex flex-row space-x-2 items-center`}>
-      <div className={tw`flex-1 flex flex-row items-center space-x-2`}>
+      <div className={tw`flex-1 flex flex-row items-center space-x-2 ml-2`}>
         <input
           checked={!!todo.complete}
-          className="toggle"
+          className={tw`form-checkbox`}
           onChange={handleCompleteChange}
           type="checkbox"
           aria-label={todo.text}
         />
         {isEditing ? (
           <TodoTextInput
-            className={tw`p-0! border-none! flex-1`}
+            className={tw`p-1! border-none! flex-1`}
             commitOnBlur={true}
             initialValue={todo.text}
             onCancel={handleTextInputCancel}
@@ -94,15 +95,15 @@ export default function TodoListItem(props: TodoListItemProps) {
           />
         ) : (
           <span
-            className={tw(isEditing && 'hidden', `flex-1`)}
+            className={tw(isEditing && 'hidden', `flex-1 p-1`)}
             onDoubleClick={handleLabelDoubleClick}
           >
             {todo.text}
           </span>
         )}
       </div>
-      <button onClick={handleLabelDoubleClick}>Edit</button>
-      <button onClick={handleDestroyClick}>Delete</button>
+      <Button onClick={handleLabelDoubleClick}>Edit</Button>
+      <Button onClick={handleDestroyClick}>Delete</Button>
       <Link to={`/todo/${todo.id}`}>View</Link>
     </li>
   )

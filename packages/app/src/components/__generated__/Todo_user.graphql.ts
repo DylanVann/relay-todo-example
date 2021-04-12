@@ -4,16 +4,17 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type Todo_todo = {
+export type Todo_user = {
     readonly id: string;
-    readonly text: string;
-    readonly complete: boolean;
-    readonly " $refType": "Todo_todo";
+    readonly userId: string;
+    readonly totalCount: number;
+    readonly completedCount: number;
+    readonly " $refType": "Todo_user";
 };
-export type Todo_todo$data = Todo_todo;
-export type Todo_todo$key = {
-    readonly " $data"?: Todo_todo$data;
-    readonly " $fragmentRefs": FragmentRefs<"Todo_todo">;
+export type Todo_user$data = Todo_user;
+export type Todo_user$key = {
+    readonly " $data"?: Todo_user$data;
+    readonly " $fragmentRefs": FragmentRefs<"Todo_user">;
 };
 
 
@@ -22,7 +23,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Todo_todo",
+  "name": "Todo_user",
   "selections": [
     {
       "alias": null,
@@ -35,19 +36,26 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "text",
+      "name": "userId",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "complete",
+      "name": "totalCount",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "completedCount",
       "storageKey": null
     }
   ],
-  "type": "Todo",
+  "type": "User",
   "abstractKey": null
 };
-(node as any).hash = '9688ea4ed5397f08547476ec6b95d8d9';
+(node as any).hash = '7d4a99e73771e30c8a0ba7cb397430e3';
 export default node;

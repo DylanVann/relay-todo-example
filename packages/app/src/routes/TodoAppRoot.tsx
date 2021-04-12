@@ -20,5 +20,9 @@ export default function TodoAppRoot(props: TodoListRootProps) {
     props.prepared.query,
   )
 
+  if (!data.user) {
+    throw new Error('No user')
+  }
+
   return <TodoApp user={data.user} />
 }

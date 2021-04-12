@@ -99,24 +99,11 @@ export default function RouterRenderer() {
       <div className={tw`prose mt-4`}>
         <strong>Relay Example TypeScript</strong>
         <ul>
-          <li>
-            <strong>Render-as-you-fetch</strong> • Renders while fetching.
-          </li>
-          <li>
-            <strong>Nested routes</strong> • Configure routes in a nested
-            manner. Fetches simultaneously.
-          </li>
-          <li>
-            <strong>Optimistic updates</strong> • Updates assumed to work. Will
-            rollback if not.
-          </li>
-          <li>
-            <strong>Paginated list view</strong> • Load more items.
-          </li>
-          <li>
-            <strong>Detail view</strong> • Update item, changes affect list when
-            going back.
-          </li>
+          <li>Render-as-you-fetch</li>
+          <li>Nested routes</li>
+          <li>Optimistic updates</li>
+          <li>Paginated list view</li>
+          <li>Detail view</li>
         </ul>
       </div>
     </div>

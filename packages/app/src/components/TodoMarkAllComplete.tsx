@@ -44,11 +44,12 @@ export default function TodoMarkAllComplete(props: TodoMarkAllCompleteProps) {
   return (
     <div className={tw`p-1 border`}>
       <div className={tw`font-bold`}>TodoMarkAllComplete</div>
-      <label className={tw`inline-flex items-center`}>
+      <label className={tw`inline-flex items-center ml-1`}>
         <input
           checked={numTodos === numCompletedTodos}
           onChange={handleMarkAllChange}
           type="checkbox"
+          className={tw`form-checkbox`}
         />
         <span className={tw`ml-2`}>Mark all as complete</span>
       </label>

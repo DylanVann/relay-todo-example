@@ -11,11 +11,12 @@
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
     "moduleResolution": "Node",
+    "preserveWatchOutput": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx"
   },
   "exclude": ["node_modules"],
-  "include": ["vite.config.ts"]
+  "include": ["vite.config.ts", "src"]
 }

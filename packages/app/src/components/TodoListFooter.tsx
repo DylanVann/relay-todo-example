@@ -2,6 +2,7 @@ import { graphql, useFragment, useRelayEnvironment } from 'react-relay'
 import RemoveCompletedTodosMutation from '../mutations/RemoveCompletedTodosMutation'
 import { TodoListFooter_user$key } from './__generated__/TodoListFooter_user.graphql'
 import { tw } from 'twind'
+import Button from './Button'
 
 export interface TodoListFooterProps {
   user: TodoListFooter_user$key
@@ -45,12 +46,9 @@ export default function TodoListFooter(props: TodoListFooterProps) {
         {numRemainingTodos === 1 ? '' : 's'} left
       </div>
       {numCompletedTodos > 0 && (
-        <button
-          className="p-1 border"
-          onClick={handleRemoveCompletedTodosClick}
-        >
+        <Button onClick={handleRemoveCompletedTodosClick}>
           Clear completed
-        </button>
+        </Button>
       )}
     </div>
   )
