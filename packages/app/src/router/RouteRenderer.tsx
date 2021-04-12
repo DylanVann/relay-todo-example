@@ -92,20 +92,23 @@ export default function RouterRenderer() {
   // Routes can error so wrap in an <ErrorBoundary>
   // Routes can suspend, so wrap in <Suspense>
   return (
-    <div className={tw`m-4`}>
-      <ErrorBoundary>
-        <Suspense fallback={'Loading...'}>{routeComponent}</Suspense>
-      </ErrorBoundary>
-      <div className={tw`prose mt-4`}>
-        <strong>Relay Example TypeScript</strong>
-        <ul>
-          <li>Render-as-you-fetch</li>
-          <li>Nested routes</li>
-          <li>Optimistic updates</li>
-          <li>Paginated list view</li>
-          <li>Detail view</li>
-        </ul>
+    <ErrorBoundary>
+      <div className={tw`m-4`}>
+        <Suspense fallback={'Loading...'}>
+          {routeComponent}
+          <div className={tw`prose mt-4`}>
+            <strong>Relay Example TypeScript</strong>
+            <ul>
+              <li>Render-as-you-fetch</li>
+              <li>Inline editing</li>
+              <li>Nested routes</li>
+              <li>Optimistic updates</li>
+              <li>Paginated and searchable list view</li>
+              <li>Detail view</li>
+            </ul>
+          </div>
+        </Suspense>
       </div>
-    </div>
+    </ErrorBoundary>
   )
 }

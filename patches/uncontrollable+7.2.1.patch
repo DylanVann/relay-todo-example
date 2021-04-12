@@ -1,0 +1,8 @@
+diff --git a/node_modules/uncontrollable/lib/cjs/index.d.ts b/node_modules/uncontrollable/lib/cjs/index.d.ts
+index 9c3845c..259f45b 100644
+--- a/node_modules/uncontrollable/lib/cjs/index.d.ts
++++ b/node_modules/uncontrollable/lib/cjs/index.d.ts
+@@ -1,2 +1,3 @@
+ export { default as useUncontrolled, useUncontrolledProp } from './hook';
++// @ts-ignore
+ export { default as uncontrollable } from './uncontrollable';

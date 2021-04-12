@@ -35,10 +35,4 @@ const env = new Environment({
   ],
 })
 
-// @ts-ignore
-if (process.env.NODE_ENV === 'development') {
-  ;(window as any).relayEnvironment = env
-  ;(window as any).debugRelayStore = () => env.getStore().getSource().toJSON()
-}
-
 export default env

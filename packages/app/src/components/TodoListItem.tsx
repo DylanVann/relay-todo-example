@@ -2,13 +2,13 @@ import { ChangeEvent, useState } from 'react'
 import ChangeTodoStatusMutation from '../mutations/ChangeTodoStatusMutation'
 import RemoveTodoMutation from '../mutations/RemoveTodoMutation'
 import RenameTodoMutation from '../mutations/RenameTodoMutation'
-import TodoTextInput from './TodoTextInput'
 import { graphql, useFragment, useRelayEnvironment } from 'react-relay'
 import { TodoListItem_todo$key } from './__generated__/TodoListItem_todo.graphql'
 import { TodoListItem_user$key } from './__generated__/TodoListItem_user.graphql'
 import Link from '../router/Link'
 import { tw } from 'twind'
 import Button from './Button'
+import InputInline from './InputInline'
 
 export interface TodoListItemProps {
   todo: TodoListItem_todo$key
@@ -56,16 +56,7 @@ export default function TodoListItem(props: TodoListItemProps) {
     setIsEditing(true)
   }
 
-  const handleTextInputCancel = () => {
-    setIsEditing(false)
-  }
-
-  const handleTextInputDelete = () => {
-    setIsEditing(false)
-    removeTodo()
-  }
-
-  const handleTextInputSave = (text: string) => {
+  const onSave = (text: string) => {
     setIsEditing(false)
     RenameTodoMutation.commit(environment, text, todo)
   }
@@ -84,23 +75,13 @@ export default function TodoListItem(props: TodoListItemProps) {
           type="checkbox"
           aria-label={todo.text}
         />
-        {isEditing ? (
-          <TodoTextInput
-            className={tw`p-1! border-none! flex-1`}
-            commitOnBlur={true}
-            initialValue={todo.text}
-            onCancel={handleTextInputCancel}
-            onDelete={handleTextInputDelete}
-            onSave={handleTextInputSave}
-          />
-        ) : (
-          <span
-            className={tw(isEditing && 'hidden', `flex-1 p-1`)}
-            onDoubleClick={handleLabelDoubleClick}
-          >
-            {todo.text}
-          </span>
-        )}
+        <InputInline
+          className={tw`flex-1`}
+          defaultValue={todo.text}
+          onSave={onSave}
+          isEditing={isEditing}
+          onChangeIsEditing={(editing) => setIsEditing(editing)}
+        />
       </div>
       <Button onClick={handleLabelDoubleClick}>Edit</Button>
       <Button onClick={handleDestroyClick}>Delete</Button>

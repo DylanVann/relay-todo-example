@@ -23,7 +23,9 @@
     "react-relay": "^11.0.1",
     "react-router": "^5.1.2",
     "react-router-config": "^5.1.1",
-    "twind": "^0.16.10"
+    "twind": "^0.16.10",
+    "twind-plugin-capsize": "^0.0.1",
+    "uncontrollable": "^7.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.13.15",

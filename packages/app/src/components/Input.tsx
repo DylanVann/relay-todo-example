@@ -11,7 +11,14 @@ export default forwardRef(function Input(
   return (
     <input
       {...props}
-      className={classNames(tw`form-input`, props.className)}
+      className={classNames(
+        tw(
+          `form-input px-1.5 py-0`,
+          `border-none! focus:outline-none! appearance-none focus:ring-0`,
+          `shadow-field-border focus:shadow-field-border-focus`,
+        ),
+        props.className,
+      )}
       ref={ref}
     />
   )

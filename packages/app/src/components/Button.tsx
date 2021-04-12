@@ -7,11 +7,14 @@ export default forwardRef(function Button(
   props: ButtonProps,
   ref: ForwardedRef<HTMLButtonElement>,
 ) {
+  const { children, ...otherProps } = props
   return (
     <button
-      {...props}
-      className={tw`p-1 border bg-black text-white flex items-center justify-center cursor-pointer`}
+      {...otherProps}
+      className={tw`p-2 bg-black text-white flex items-center justify-center cursor-pointer`}
       ref={ref}
-    />
+    >
+      <span className={tw`cap-main`}>{children}</span>
+    </button>
   )
 })
