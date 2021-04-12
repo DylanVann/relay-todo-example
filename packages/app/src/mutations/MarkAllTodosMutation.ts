@@ -1,34 +1,11 @@
-import { commitMutation, graphql } from 'react-relay'
+import { commitMutation, ConnectionHandler, graphql } from 'react-relay'
 import { Environment } from 'relay-runtime'
 import { MarkAllTodosMutation } from './__generated__/MarkAllTodosMutation.graphql'
 import { TodoList_user } from '../components/__generated__/TodoList_user.graphql'
 
-function getOptimisticResponse(
-  complete: boolean,
-  todos: TodoList_user['todos'],
-  user: TodoList_user,
-) {
-  const payload: any = { user: { id: user.id } }
-  if (todos && todos.edges) {
-    payload.changedTodos = todos.edges
-      .filter((edge) => edge && edge.node && edge.node.complete !== complete)
-      .map((edge) => ({
-        complete: complete,
-        id: edge && edge.node && edge.node.id,
-      }))
-  }
-  if (user.totalCount != null) {
-    payload.user.completedCount = complete ? user.totalCount : 0
-  }
-  return {
-    markAllTodos: payload,
-  }
-}
-
 function commit(
   environment: Environment,
   complete: boolean,
-  todos: TodoList_user['todos'],
   user: TodoList_user,
 ) {
   return commitMutation<MarkAllTodosMutation>(environment, {
@@ -49,7 +26,32 @@ function commit(
     variables: {
       input: { complete, userId: user.userId },
     },
-    optimisticResponse: getOptimisticResponse(complete, todos, user),
+    optimisticUpdater: (store) => {
+      const userRecord = store.get(user.id)
+      if (!userRecord) return
+      if (user.totalCount != null) {
+        userRecord.setValue(complete ? user.totalCount : 0, 'completedCount')
+      }
+
+      const todos = ConnectionHandler.getConnection(
+        userRecord,
+        'TodoList_todos',
+      )
+      if (!todos) return
+
+      const edges = todos?.getLinkedRecords('edges')
+      if (!edges) {
+        return
+      }
+
+      edges.forEach((edge) => {
+        const node = edge.getLinkedRecord('node')
+        if (!node) return
+        const nodeComplete = node.getValue('complete')
+        if (nodeComplete === complete) return
+        node.setValue(complete, 'complete')
+      })
+    },
   })
 }
 

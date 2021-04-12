@@ -30,7 +30,10 @@ export type TodoList_user$key = {
 
 
 const node: ReaderFragment = (function(){
-var v0 = {
+var v0 = [
+  "todos"
+],
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -38,19 +41,43 @@ var v0 = {
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": 3,
+      "kind": "LocalArgument",
+      "name": "count"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "cursor"
+    }
+  ],
   "kind": "Fragment",
   "metadata": {
     "connection": [
       {
-        "count": null,
-        "cursor": null,
+        "count": "count",
+        "cursor": "cursor",
         "direction": "forward",
-        "path": [
-          "todos"
-        ]
+        "path": (v0/*: any*/)
       }
-    ]
+    ],
+    "refetch": {
+      "connection": {
+        "forward": {
+          "count": "count",
+          "cursor": "cursor"
+        },
+        "backward": null,
+        "path": (v0/*: any*/)
+      },
+      "fragmentPathInResult": [
+        "node"
+      ],
+      "operation": require('./TodoListPaginationQuery.graphql.ts'),
+      "identifierField": "id"
+    }
   },
   "name": "TodoList_user",
   "selections": [
@@ -78,7 +105,7 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -139,7 +166,7 @@ return {
       ],
       "storageKey": null
     },
-    (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -171,5 +198,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '190721a445da6f1c071ea6530dd8cef1';
+(node as any).hash = '01554d927621fbf2a7103709253e1e7b';
 export default node;

@@ -19,24 +19,21 @@ export default function TodoAdd(props: TodoAppProps) {
   }
 
   return (
-    <div className={tw`p-1 border flex flex-col`}>
-      <div className={tw`font-bold`}>TodoAdd</div>
-      <div className={tw`flex flex-row space-x-2 h-8`}>
-        <Input
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              addTodo(text)
-              setText('')
-            }
-          }}
-          type="text"
-          placeholder="What needs to be done?"
-          className={tw`flex-1 px-1.5 py-0`}
-        />
-        <Button onClick={() => addTodo(text)}>Add</Button>
-      </div>
+    <div className={tw`flex flex-row space-x-2 h-8`}>
+      <Input
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            addTodo(text)
+            setText('')
+          }
+        }}
+        type="text"
+        placeholder="What needs to be done?"
+        className={tw`flex-1 px-1.5 py-0`}
+      />
+      <Button onClick={() => addTodo(text)}>Add</Button>
     </div>
   )
 }

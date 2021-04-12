@@ -11,7 +11,10 @@ export default forwardRef(function Button(
   return (
     <button
       {...otherProps}
-      className={tw`p-2 bg-black text-white flex items-center justify-center cursor-pointer`}
+      className={tw(
+        `p-2 bg-black text-white flex items-center justify-center cursor-pointer`,
+        `disabled:bg-gray-300`,
+      )}
       ref={ref}
     >
       <span className={tw`cap-main`}>{children}</span>

@@ -1,8 +1,6 @@
 import { commitMutation, graphql } from 'react-relay'
 import { Environment } from 'relay-runtime'
-import { TodoListItem_todo } from '../components/__generated__/TodoListItem_todo.graphql'
 import { ChangeTodoStatusMutation } from './__generated__/ChangeTodoStatusMutation.graphql'
-import { TodoListItem_user } from '../components/__generated__/TodoListItem_user.graphql'
 
 interface User {
   id: string

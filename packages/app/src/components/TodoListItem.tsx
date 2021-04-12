@@ -43,16 +43,16 @@ export default function TodoListItem(props: TodoListItemProps) {
     props.user,
   )
 
-  const handleCompleteChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeComplete = (e: ChangeEvent<HTMLInputElement>) => {
     const complete = e.target.checked
     ChangeTodoStatusMutation.commit(environment, complete, todo, user)
   }
 
-  const handleDestroyClick = () => {
-    removeTodo()
+  const onClickDelete = () => {
+    RemoveTodoMutation.commit(environment, todo, user)
   }
 
-  const handleLabelDoubleClick = () => {
+  const onClickEdit = () => {
     setIsEditing(true)
   }
 
@@ -61,17 +61,13 @@ export default function TodoListItem(props: TodoListItemProps) {
     RenameTodoMutation.commit(environment, text, todo)
   }
 
-  const removeTodo = () => {
-    RemoveTodoMutation.commit(environment, todo, user)
-  }
-
   return (
     <li className={tw`border p-1 flex flex-row space-x-2 items-center`}>
       <div className={tw`flex-1 flex flex-row items-center space-x-2 ml-2`}>
         <input
           checked={!!todo.complete}
           className={tw`form-checkbox`}
-          onChange={handleCompleteChange}
+          onChange={onChangeComplete}
           type="checkbox"
           aria-label={todo.text}
         />
@@ -83,8 +79,8 @@ export default function TodoListItem(props: TodoListItemProps) {
           onChangeIsEditing={(editing) => setIsEditing(editing)}
         />
       </div>
-      <Button onClick={handleLabelDoubleClick}>Edit</Button>
-      <Button onClick={handleDestroyClick}>Delete</Button>
+      <Button onClick={onClickEdit}>Edit</Button>
+      <Button onClick={onClickDelete}>Delete</Button>
       <Link to={`/todo/${todo.id}`}>View</Link>
     </li>
   )

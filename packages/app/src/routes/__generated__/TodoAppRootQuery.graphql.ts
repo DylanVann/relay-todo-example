@@ -35,20 +35,19 @@ fragment TodoApp_user on User {
   ...TodoMarkAllComplete_user
   ...TodoListFooter_user
   ...TodoList_user
+  ...TodoClearCompleted_user
+}
+
+fragment TodoClearCompleted_user on User {
+  id
+  userId
+  completedCount
 }
 
 fragment TodoListFooter_user on User {
   id
   userId
   completedCount
-  completedTodos: todos(status: "completed", first: 2147483647) {
-    edges {
-      node {
-        id
-        complete
-      }
-    }
-  }
   totalCount
 }
 
@@ -66,7 +65,7 @@ fragment TodoListItem_user on User {
 }
 
 fragment TodoList_user on User {
-  todos(first: 2147483647) {
+  todos(first: 3) {
     edges {
       node {
         id
@@ -93,20 +92,6 @@ fragment TodoMarkAllComplete_user on User {
   userId
   totalCount
   completedCount
-  todos(first: 2147483647) {
-    edges {
-      node {
-        id
-        complete
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
 }
 */
 
@@ -132,21 +117,13 @@ v2 = {
   "name": "id",
   "storageKey": null
 },
-v3 = {
-  "kind": "Literal",
-  "name": "first",
-  "value": 2147483647
-},
-v4 = [
-  (v3/*: any*/)
-],
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "complete",
-  "storageKey": null
-};
+v3 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 3
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -212,7 +189,7 @@ return {
           },
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v3/*: any*/),
             "concreteType": "TodoConnection",
             "kind": "LinkedField",
             "name": "todos",
@@ -235,12 +212,11 @@ return {
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
-                      (v5/*: any*/),
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "__typename",
+                        "name": "complete",
                         "storageKey": null
                       },
                       {
@@ -248,6 +224,13 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "text",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "__typename",
                         "storageKey": null
                       }
                     ],
@@ -289,58 +272,16 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "todos(first:2147483647)"
+            "storageKey": "todos(first:3)"
           },
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v3/*: any*/),
             "filters": null,
             "handle": "connection",
             "key": "TodoList_todos",
             "kind": "LinkedHandle",
             "name": "todos"
-          },
-          {
-            "alias": "completedTodos",
-            "args": [
-              (v3/*: any*/),
-              {
-                "kind": "Literal",
-                "name": "status",
-                "value": "completed"
-              }
-            ],
-            "concreteType": "TodoConnection",
-            "kind": "LinkedField",
-            "name": "todos",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "TodoEdge",
-                "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Todo",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      (v2/*: any*/),
-                      (v5/*: any*/)
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": "todos(first:2147483647,status:\"completed\")"
           }
         ],
         "storageKey": null
@@ -348,12 +289,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "66c9465472d3c3d2eeb11884f96b6675",
+    "cacheID": "5805b30b34299d83e7ed83896794c88b",
     "id": null,
     "metadata": {},
     "name": "TodoAppRootQuery",
     "operationKind": "query",
-    "text": "query TodoAppRootQuery(\n  $id: String!\n) {\n  user(id: $id) {\n    ...TodoApp_user\n    id\n  }\n}\n\nfragment TodoApp_user on User {\n  id\n  totalCount\n  ...TodoMarkAllComplete_user\n  ...TodoListFooter_user\n  ...TodoList_user\n}\n\nfragment TodoListFooter_user on User {\n  id\n  userId\n  completedCount\n  completedTodos: todos(status: \"completed\", first: 2147483647) {\n    edges {\n      node {\n        id\n        complete\n      }\n    }\n  }\n  totalCount\n}\n\nfragment TodoListItem_todo on Todo {\n  complete\n  id\n  text\n}\n\nfragment TodoListItem_user on User {\n  id\n  userId\n  totalCount\n  completedCount\n}\n\nfragment TodoList_user on User {\n  todos(first: 2147483647) {\n    edges {\n      node {\n        id\n        complete\n        ...TodoListItem_todo\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n  userId\n  totalCount\n  completedCount\n  ...TodoListItem_user\n}\n\nfragment TodoMarkAllComplete_user on User {\n  id\n  userId\n  totalCount\n  completedCount\n  todos(first: 2147483647) {\n    edges {\n      node {\n        id\n        complete\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query TodoAppRootQuery(\n  $id: String!\n) {\n  user(id: $id) {\n    ...TodoApp_user\n    id\n  }\n}\n\nfragment TodoApp_user on User {\n  id\n  totalCount\n  ...TodoMarkAllComplete_user\n  ...TodoListFooter_user\n  ...TodoList_user\n  ...TodoClearCompleted_user\n}\n\nfragment TodoClearCompleted_user on User {\n  id\n  userId\n  completedCount\n}\n\nfragment TodoListFooter_user on User {\n  id\n  userId\n  completedCount\n  totalCount\n}\n\nfragment TodoListItem_todo on Todo {\n  complete\n  id\n  text\n}\n\nfragment TodoListItem_user on User {\n  id\n  userId\n  totalCount\n  completedCount\n}\n\nfragment TodoList_user on User {\n  todos(first: 3) {\n    edges {\n      node {\n        id\n        complete\n        ...TodoListItem_todo\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n  userId\n  totalCount\n  completedCount\n  ...TodoListItem_user\n}\n\nfragment TodoMarkAllComplete_user on User {\n  id\n  userId\n  totalCount\n  completedCount\n}\n"
   }
 };
 })();

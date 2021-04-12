@@ -19,11 +19,7 @@ function sharedUpdater(
   )
 }
 
-function commit(
-  environment: Environment,
-  todos: TodoListFooter_user['completedTodos'],
-  user: TodoListFooter_user,
-) {
+function commit(environment: Environment, user: TodoListFooter_user) {
   return commitMutation<RemoveCompletedTodosMutation>(environment, {
     mutation: graphql`
       mutation RemoveCompletedTodosMutation(
@@ -47,12 +43,34 @@ function commit(
       sharedUpdater(store, user, payload.getValue('deletedTodoIds') as string[])
     },
     optimisticUpdater: (store) => {
-      if (todos && todos.edges) {
-        const deletedIDs = todos.edges
-          .filter((edge) => edge && edge.node && edge.node.complete)
-          .map((edge) => (edge && edge.node && edge.node.id) as string)
-        sharedUpdater(store, user, deletedIDs)
+      const userRecord = store.get(user.id)!
+      if (!userRecord) return
+
+      const todos = ConnectionHandler.getConnection(
+        userRecord,
+        'TodoList_todos',
+      )
+      if (!todos) return
+
+      const edges = todos?.getLinkedRecords('edges')
+      if (!edges) {
+        return
       }
+
+      userRecord.setValue(0, 'completedCount')
+
+      const deleteIds: string[] = []
+      edges.forEach((edge) => {
+        const node = edge.getLinkedRecord('node')
+        const id = node?.getValue('id') as string
+        const completed = node?.getValue('complete') as boolean
+        console.log('id', id)
+        console.log('completed', completed)
+        if (id && completed) {
+          deleteIds.push(id)
+        }
+      })
+      sharedUpdater(store, user, deleteIds)
     },
   })
 }

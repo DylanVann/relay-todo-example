@@ -7,7 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type TodoApp_user = {
     readonly id: string;
     readonly totalCount: number;
-    readonly " $fragmentRefs": FragmentRefs<"TodoMarkAllComplete_user" | "TodoListFooter_user" | "TodoList_user">;
+    readonly " $fragmentRefs": FragmentRefs<"TodoMarkAllComplete_user" | "TodoListFooter_user" | "TodoList_user" | "TodoClearCompleted_user">;
     readonly " $refType": "TodoApp_user";
 };
 export type TodoApp_user$data = TodoApp_user;
@@ -52,10 +52,15 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "TodoList_user"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "TodoClearCompleted_user"
     }
   ],
   "type": "User",
   "abstractKey": null
 };
-(node as any).hash = '3333563876d1767aeadd3fb5d2af36e1';
+(node as any).hash = '9e83c8c5cec6cbd07b6309a377e235a1';
 export default node;

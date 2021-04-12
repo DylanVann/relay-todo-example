@@ -18,16 +18,6 @@ export default function TodoMarkAllComplete(props: TodoMarkAllCompleteProps) {
         userId
         totalCount
         completedCount
-        todos(
-          first: 2147483647 # max GraphQLInt
-        ) @connection(key: "TodoList_todos") {
-          edges {
-            node {
-              id
-              complete
-            }
-          }
-        }
       }
     `,
     props.user,
@@ -38,21 +28,18 @@ export default function TodoMarkAllComplete(props: TodoMarkAllCompleteProps) {
 
   const handleMarkAllChange = (e: ChangeEvent<HTMLInputElement>) => {
     const complete = e.target.checked
-    MarkAllTodosMutation.commit(environment, complete, user.todos, user)
+    MarkAllTodosMutation.commit(environment, complete, user)
   }
 
   return (
-    <div className={tw`p-1 border`}>
-      <div className={tw`font-bold`}>TodoMarkAllComplete</div>
-      <label className={tw`inline-flex items-center ml-1`}>
-        <input
-          checked={numTodos === numCompletedTodos}
-          onChange={handleMarkAllChange}
-          type="checkbox"
-          className={tw`form-checkbox`}
-        />
-        <span className={tw`ml-2`}>Mark all as complete</span>
-      </label>
-    </div>
+    <label className={tw`inline-flex items-center ml-1`}>
+      <input
+        checked={numTodos === numCompletedTodos}
+        onChange={handleMarkAllChange}
+        type="checkbox"
+        className={tw`form-checkbox`}
+      />
+      <span className={tw`ml-2`}>Mark all as complete</span>
+    </label>
   )
 }

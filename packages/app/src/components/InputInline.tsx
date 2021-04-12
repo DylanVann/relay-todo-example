@@ -20,7 +20,9 @@ export default function InputInline(props: InputInlineProps) {
   const [value, setValue] = useState(String(props.defaultValue))
   const onClickedDiv = () => onChangeIsEditing(true)
   const save = () => {
-    props.onSave?.(value)
+    if (value !== props.defaultValue) {
+      props.onSave?.(value)
+    }
     onChangeIsEditing(false)
   }
   const onBlur = () => save()

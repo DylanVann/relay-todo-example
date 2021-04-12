@@ -25,10 +25,10 @@ export default function Root(props: RootProps) {
   )
 
   return (
-    <div className={tw`flex flex-col space-y-2 p-1 border`}>
-      <div className={tw`font-bold`}>Root</div>
+    <div className={tw`flex flex-col space-y-2 p-2 border`}>
+      <div className={tw`font-bold cap-main`}>Root</div>
       {props.children}
-      <div>{data.user?.completedCount} completed</div>
+      <div className={tw`cap-main`}>Completed {data.user?.completedCount}.</div>
     </div>
   )
 }
