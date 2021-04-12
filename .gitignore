@@ -1,0 +1,16 @@
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Outputs
+dist
+dist-types
+dist-ssr
+
+# TypeScript
+*.tsbuildinfo
+
+# Yarn
+node_modules
+yarn-error.log

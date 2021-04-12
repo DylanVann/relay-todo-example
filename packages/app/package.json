@@ -1,0 +1,47 @@
+{
+  "name": "app",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"yarn dev:vite\" \"yarn dev:relay\"",
+    "dev:vite": "vite",
+    "dev:relay": "yarn build:relay --watch",
+    "build": "yarn build:tsc && yarn build:relay && yarn build:vite",
+    "build:tsc": "tsc",
+    "build:relay": "relay-compiler --language typescript --src ./src --extensions ts tsx",
+    "build:vite": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@twind/forms": "^0.1.4",
+    "@twind/typography": "^0.0.2",
+    "classnames": "^2.3.1",
+    "history": "^4.10.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-relay": "^11.0.1",
+    "react-router": "^5.1.2",
+    "react-router-config": "^5.1.1",
+    "twind": "^0.16.10"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.15",
+    "@babel/preset-react": "^7.13.13",
+    "@babel/preset-typescript": "^7.13.0",
+    "@types/babel__core": "^7.1.14",
+    "@types/node": "^14.14.37",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-relay": "^11.0.1",
+    "@types/react-router-config": "^5.0.2",
+    "@types/relay-runtime": "^11.0.0",
+    "@vitejs/plugin-react-refresh": "^1.3.1",
+    "babel-plugin-relay": "^11.0.1",
+    "concurrently": "^6.0.1",
+    "graphql": "^15.5.0",
+    "relay-compiler": "^11.0.1",
+    "relay-compiler-language-typescript": "^14.0.0",
+    "relay-config": "^11.0.1",
+    "vite": "^2.1.5"
+  }
+}
