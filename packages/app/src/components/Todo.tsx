@@ -72,7 +72,7 @@ export default function Todo(props: TodoProps) {
         />
         <InputInline defaultValue={todo.text} onSave={onSave} />
       </div>
-      <Suspense fallback={<InputInline defaultValue={'Loading...'} disabled />}>
+      <Suspense fallback={<InputInline placeholder={'Loading...'} disabled />}>
         <TodoDescription todo={todo} />
       </Suspense>
       <Button onClick={onDelete}>Delete</Button>

@@ -47,10 +47,13 @@ export default function InputInline(props: InputInlineProps) {
     />
   ) : (
     <span
-      className={classNames(tw`px-1.5 py-0`, props.className)}
+      className={classNames(
+        tw(`px-1.5 py-0`, !props.defaultValue && 'text-gray-500'),
+        props.className,
+      )}
       onClick={onClickedDiv}
     >
-      {props.defaultValue || <>&nbsp;</>}
+      {props.defaultValue || props.placeholder || <>&nbsp;</>}
     </span>
   )
 }

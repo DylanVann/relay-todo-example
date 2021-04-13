@@ -22,11 +22,10 @@ export default function TodoDescription(props: TodoDescriptionProps) {
     ChangeTodoDescriptionMutation.commit(environment, text, todo)
   }
   return (
-    <>
-      <InputInline
-        defaultValue={todo.description || ''}
-        onSave={onSaveDescription}
-      />
-    </>
+    <InputInline
+      placeholder={'Add a description.'}
+      defaultValue={todo.description || ''}
+      onSave={onSaveDescription}
+    />
   )
 }
