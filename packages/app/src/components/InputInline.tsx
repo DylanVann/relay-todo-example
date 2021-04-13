@@ -1,4 +1,10 @@
-import { FocusEventHandler, KeyboardEventHandler, useRef } from 'react'
+import {
+  FocusEventHandler,
+  ForwardedRef,
+  forwardRef,
+  KeyboardEventHandler,
+  useRef,
+} from 'react'
 import Input from './Input'
 import { tw } from 'twind'
 import classNames from 'classnames'
@@ -7,11 +13,23 @@ export type InputInlineProps = JSX.IntrinsicElements['input'] & {
   onSave?: (value: string) => void
 }
 
-export default function InputInline(props: InputInlineProps) {
-  const { onSave, className, ...inputProps } = props
-  const ref = useRef<HTMLInputElement>(null)
+export default forwardRef(function InputInline(
+  props: InputInlineProps,
+  ref: ForwardedRef<HTMLInputElement>,
+) {
+  const { onSave, ...inputProps } = props
+  const inputRef = useRef<HTMLInputElement | null>(null)
+  const saveRef = (el: HTMLInputElement | null) => {
+    inputRef.current = el
+    if (ref && typeof ref === 'function') {
+      ref(el)
+    }
+    if (ref && typeof ref === 'object') {
+      ;(ref as any).current = el
+    }
+  }
   const save = () => {
-    const value = ref.current?.value || ''
+    const value = inputRef.current?.value || ''
     if (value !== props.defaultValue) {
       props.onSave?.(value)
     }
@@ -20,25 +38,25 @@ export default function InputInline(props: InputInlineProps) {
     save()
   }
   const onKeyDown: KeyboardEventHandler = (e) => {
-    if (ref.current) {
+    if (inputRef.current) {
       if (e.key === 'Escape') {
-        ref.current.value = (props.defaultValue as string) || ''
-        ref.current.blur()
+        inputRef.current.value = (props.defaultValue as string) || ''
+        inputRef.current.blur()
       } else if (e.key === 'Enter') {
         save()
-        ref.current.blur()
+        inputRef.current.blur()
       }
     }
   }
   return (
     <Input
       {...inputProps}
-      ref={ref}
+      variant={'ghost'}
+      ref={saveRef}
       defaultValue={props.defaultValue}
-      className={classNames(tw`shadow-none`, className)}
       onBlur={onBlur}
       onKeyDown={onKeyDown}
       onKeyPress={() => console.log('keypress')}
     />
   )
-}
+})

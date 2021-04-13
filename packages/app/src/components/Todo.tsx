@@ -62,7 +62,7 @@ export default function Todo(props: TodoProps) {
     <div className={tw`p-3 border flex flex-col space-y-2`}>
       <div className={tw`font-bold`}>Todo</div>
       <Link to={'/'}>Back</Link>
-      <div className={tw`flex flex-row items-center`}>
+      <div className={tw`flex flex-row items-center space-x-2`}>
         <input
           checked={!!todo.complete}
           className={tw`form-checkbox`}

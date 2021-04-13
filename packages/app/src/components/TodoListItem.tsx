@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 import ChangeTodoStatusMutation from '../mutations/ChangeTodoStatusMutation'
 import RemoveTodoMutation from '../mutations/RemoveTodoMutation'
 import RenameTodoMutation from '../mutations/RenameTodoMutation'
@@ -16,8 +16,6 @@ export interface TodoListItemProps {
 }
 
 export default function TodoListItem(props: TodoListItemProps) {
-  const [isEditing, setIsEditing] = useState(false)
-
   const environment = useRelayEnvironment()
 
   const todo = useFragment(
@@ -52,12 +50,13 @@ export default function TodoListItem(props: TodoListItemProps) {
     RemoveTodoMutation.commit(environment, todo, user)
   }
 
+  const nameInputRef = useRef<HTMLInputElement | null>(null)
+
   const onClickEdit = () => {
-    setIsEditing(true)
+    nameInputRef.current?.focus()
   }
 
   const onSave = (text: string) => {
-    setIsEditing(false)
     RenameTodoMutation.commit(environment, text, todo)
   }
 
@@ -72,11 +71,10 @@ export default function TodoListItem(props: TodoListItemProps) {
           aria-label={todo.text}
         />
         <InputInline
+          ref={nameInputRef}
           className={tw`flex-1`}
           defaultValue={todo.text}
           onSave={onSave}
-          isEditing={isEditing}
-          onChangeIsEditing={(editing) => setIsEditing(editing)}
         />
       </div>
       <Button onClick={onClickEdit}>Edit</Button>
