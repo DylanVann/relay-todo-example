@@ -11,7 +11,6 @@ import { useHistory } from '../router/RoutingContext'
 import React, { ChangeEvent, Suspense } from 'react'
 import ChangeTodoStatusMutation from '../mutations/ChangeTodoStatusMutation'
 import TodoDescription from './TodoDescription'
-import Input from './Input'
 
 export interface TodoProps {
   todo: Todo_todo$key
