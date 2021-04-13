@@ -1,59 +1,44 @@
-import { ChangeEventHandler, KeyboardEventHandler, useState } from 'react'
+import { FocusEventHandler, KeyboardEventHandler, useRef } from 'react'
 import Input from './Input'
 import { tw } from 'twind'
-import { useUncontrolledProp } from 'uncontrollable'
 import classNames from 'classnames'
 
 export type InputInlineProps = JSX.IntrinsicElements['input'] & {
   onSave?: (value: string) => void
-  defaultIsEditing?: boolean
-  isEditing?: boolean
-  onChangeIsEditing?: (isEditing: boolean) => void
 }
 
 export default function InputInline(props: InputInlineProps) {
-  const [isEditing, onChangeIsEditing] = useUncontrolledProp(
-    props.isEditing,
-    props.defaultIsEditing,
-    props.onChangeIsEditing,
-  )
-  const [value, setValue] = useState(String(props.defaultValue))
-  const onClickedDiv = () => onChangeIsEditing(true)
+  const { onSave, className, ...inputProps } = props
+  const ref = useRef<HTMLInputElement>(null)
   const save = () => {
+    const value = ref.current?.value || ''
     if (value !== props.defaultValue) {
       props.onSave?.(value)
     }
-    onChangeIsEditing(false)
   }
-  const onBlur = () => save()
+  const onBlur: FocusEventHandler = (e) => {
+    save()
+  }
   const onKeyDown: KeyboardEventHandler = (e) => {
-    if (e.key === 'Escape') {
-      onChangeIsEditing(false)
-    } else if (e.key === 'Enter') {
-      save()
+    if (ref.current) {
+      if (e.key === 'Escape') {
+        ref.current.value = (props.defaultValue as string) || ''
+        ref.current.blur()
+      } else if (e.key === 'Enter') {
+        save()
+        ref.current.blur()
+      }
     }
   }
-  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setValue(e.target.value)
-  }
-  return isEditing ? (
+  return (
     <Input
-      autoFocus
+      {...inputProps}
+      ref={ref}
       defaultValue={props.defaultValue}
-      className={props.className}
+      className={classNames(tw`shadow-none`, className)}
       onBlur={onBlur}
       onKeyDown={onKeyDown}
-      onChange={onChange}
+      onKeyPress={() => console.log('keypress')}
     />
-  ) : (
-    <span
-      className={classNames(
-        tw(`px-1.5 py-0`, !props.defaultValue && 'text-gray-500'),
-        props.className,
-      )}
-      onClick={onClickedDiv}
-    >
-      {props.defaultValue || props.placeholder || <>&nbsp;</>}
-    </span>
   )
 }

@@ -14,13 +14,15 @@ import { twindPluginCapsize } from 'twind-plugin-capsize'
 export const setupTwind = () =>
   setup({
     theme: {
-      fontFamily: {
-        main: ['Roboto', 'sans-serif'],
-      },
-      boxShadow: {
-        'field-border': 'inset 0 0 0 1px rgba(0,0,0,0.2)',
-        'field-border-focus':
-          'inset 0 0 0 1px rgba(0,0,255,0.4), 0 0 0 2px rgba(0,0,255,0.2)',
+      extend: {
+        fontFamily: {
+          main: ['Roboto', 'sans-serif'],
+        },
+        boxShadow: {
+          'field-border': 'inset 0 0 0 1px rgba(0,0,0,0.2)',
+          'field-border-focus':
+            'inset 0 0 0 1px rgba(0,0,255,0.4), 0 0 0 2px rgba(0,0,255,0.2)',
+        },
       },
     },
     plugins: {
