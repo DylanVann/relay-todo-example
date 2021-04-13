@@ -8,6 +8,10 @@ import { Todo_user$key } from './__generated__/Todo_user.graphql'
 import InputInline from './InputInline'
 import Button from './Button'
 import { useHistory } from '../router/RoutingContext'
+import React, { ChangeEvent, Suspense } from 'react'
+import ChangeTodoStatusMutation from '../mutations/ChangeTodoStatusMutation'
+import TodoDescription from './TodoDescription'
+import Input from './Input'
 
 export interface TodoProps {
   todo: Todo_todo$key
@@ -22,6 +26,7 @@ export default function Todo(props: TodoProps) {
         id
         text
         complete
+        ...TodoDescription_todo
       }
     `,
     props.todo,
@@ -49,13 +54,28 @@ export default function Todo(props: TodoProps) {
     RenameTodoMutation.commit(environment, text, todo)
   }
 
+  const onChangeComplete = (e: ChangeEvent<HTMLInputElement>) => {
+    const complete = e.target.checked
+    ChangeTodoStatusMutation.commit(environment, complete, todo, user)
+  }
+
   return (
     <div className={tw`p-3 border flex flex-col space-y-2`}>
       <div className={tw`font-bold`}>Todo</div>
       <Link to={'/'}>Back</Link>
-      <div className={tw`-mx-1.5`}>
+      <div className={tw`flex flex-row items-center`}>
+        <input
+          checked={!!todo.complete}
+          className={tw`form-checkbox`}
+          onChange={onChangeComplete}
+          type="checkbox"
+          aria-label={todo.text}
+        />
         <InputInline defaultValue={todo.text} onSave={onSave} />
       </div>
+      <Suspense fallback={<InputInline defaultValue={'Loading...'} disabled />}>
+        <TodoDescription todo={todo} />
+      </Suspense>
       <Button onClick={onDelete}>Delete</Button>
     </div>
   )

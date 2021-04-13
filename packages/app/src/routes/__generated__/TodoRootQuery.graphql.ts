@@ -39,10 +39,16 @@ query TodoRootQuery(
   }
 }
 
+fragment TodoDescription_todo on Todo {
+  id
+  description
+}
+
 fragment Todo_todo on Todo {
   id
   text
   complete
+  ...TodoDescription_todo
 }
 
 fragment Todo_user on User {
@@ -201,6 +207,13 @@ return {
                 "kind": "ScalarField",
                 "name": "complete",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "description",
+                "storageKey": null
               }
             ],
             "type": "Todo",
@@ -212,12 +225,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "78aea362e53fcdea08fd97cf154cade5",
+    "cacheID": "003ea74dc6b462c97292208ad6559e00",
     "id": null,
     "metadata": {},
     "name": "TodoRootQuery",
     "operationKind": "query",
-    "text": "query TodoRootQuery(\n  $id: ID!\n  $userId: String!\n) {\n  user(id: $userId) {\n    ...Todo_user\n    id\n  }\n  node(id: $id) {\n    __typename\n    ...Todo_todo\n    id\n  }\n}\n\nfragment Todo_todo on Todo {\n  id\n  text\n  complete\n}\n\nfragment Todo_user on User {\n  id\n  userId\n  totalCount\n  completedCount\n}\n"
+    "text": "query TodoRootQuery(\n  $id: ID!\n  $userId: String!\n) {\n  user(id: $userId) {\n    ...Todo_user\n    id\n  }\n  node(id: $id) {\n    __typename\n    ...Todo_todo\n    id\n  }\n}\n\nfragment TodoDescription_todo on Todo {\n  id\n  description\n}\n\nfragment Todo_todo on Todo {\n  id\n  text\n  complete\n  ...TodoDescription_todo\n}\n\nfragment Todo_user on User {\n  id\n  userId\n  totalCount\n  completedCount\n}\n"
   }
 };
 })();

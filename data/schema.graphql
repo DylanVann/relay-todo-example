@@ -60,12 +60,14 @@ type Todo implements Node {
   """The ID of an object"""
   id: ID!
   text: String!
+  description: String
   complete: Boolean!
 }
 
 type Mutation {
   addTodo(input: AddTodoInput!): AddTodoPayload
   changeTodoStatus(input: ChangeTodoStatusInput!): ChangeTodoStatusPayload
+  changeTodoDescription(input: ChangeTodoDescriptionInput!): ChangeTodoDescriptionPayload
   markAllTodos(input: MarkAllTodosInput!): MarkAllTodosPayload
   removeCompletedTodos(input: RemoveCompletedTodosInput!): RemoveCompletedTodosPayload
   removeTodo(input: RemoveTodoInput!): RemoveTodoPayload
@@ -80,6 +82,7 @@ type AddTodoPayload {
 
 input AddTodoInput {
   text: String!
+  description: String
   userId: ID!
   clientMutationId: String
 }
@@ -94,6 +97,17 @@ input ChangeTodoStatusInput {
   complete: Boolean!
   id: ID!
   userId: ID!
+  clientMutationId: String
+}
+
+type ChangeTodoDescriptionPayload {
+  todo: Todo!
+  clientMutationId: String
+}
+
+input ChangeTodoDescriptionInput {
+  id: ID!
+  description: String
   clientMutationId: String
 }
 

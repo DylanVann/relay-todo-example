@@ -5,6 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 export type AddTodoInput = {
     text: string;
+    description?: string | null;
     userId: string;
     clientMutationId?: string | null;
 };

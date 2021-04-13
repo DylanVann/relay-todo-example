@@ -1,29 +1,23 @@
 // @flow
-export class Todo {
-  +id: string
-  +text: string
-  +complete: boolean
-
-  constructor(id: string, text: string, complete: boolean) {
-    this.id = id
-    this.text = text
-    this.complete = complete
-  }
+export interface Todo {
+  +type: 'todo';
+  +id: string;
+  +text: string;
+  +complete: boolean;
+  +description: string;
 }
 
-export class User {
-  +id: string
-
-  constructor(id: string) {
-    this.id = id
-  }
+export interface User {
+  +type: 'user';
+  +id: string;
 }
 
 // Mock authenticated ID
 export const USER_ID = 'me'
 
 // Mock user database table
-const usersById: Map<string, User> = new Map([[USER_ID, new User(USER_ID)]])
+const user: User = { type: 'user', id: USER_ID }
+const usersById: Map<string, User> = new Map([[USER_ID, user]])
 
 // Mock todo database table
 const todosById: Map<string, Todo> = new Map()
@@ -40,8 +34,18 @@ function getTodoIdsForUser(id: string): $ReadOnlyArray<string> {
   return todoIdsByUser.get(id) || []
 }
 
-export function addTodo(text: string, complete: boolean): string {
-  const todo = new Todo(`${nextTodoId++}`, text, complete)
+export function addTodo(
+  text: string,
+  complete: boolean,
+  description?: string,
+): string {
+  const todo: Todo = {
+    type: 'todo',
+    id: `${nextTodoId++}`,
+    text,
+    complete,
+    description,
+  }
   todosById.set(todo.id, todo)
 
   const todoIdsForUser = getTodoIdsForUser(USER_ID)
@@ -52,9 +56,7 @@ export function addTodo(text: string, complete: boolean): string {
 
 export function changeTodoStatus(id: string, complete: boolean) {
   const todo = getTodoOrThrow(id)
-
-  // Replace with the modified complete value
-  todosById.set(id, new Todo(id, todo.text, complete))
+  todosById.set(id, { ...todo, complete })
 }
 
 // Private, for strongest typing, only export `getTodoOrThrow`
@@ -146,9 +148,12 @@ export function removeCompletedTodos(): $ReadOnlyArray<string> {
   return todoIdsToRemove
 }
 
+export function changeTodoDescription(id: string, description: string) {
+  const todo = getTodoOrThrow(id)
+  todosById.set(id, { ...todo, description })
+}
+
 export function renameTodo(id: string, text: string) {
   const todo = getTodoOrThrow(id)
-
-  // Replace with the modified text value
-  todosById.set(id, new Todo(id, text, todo.complete))
+  todosById.set(id, { ...todo, text })
 }

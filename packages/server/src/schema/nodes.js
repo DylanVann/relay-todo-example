@@ -38,9 +38,9 @@ const { nodeInterface, nodeField } = nodeDefinitions(
     return null
   },
   (obj: {}): ?GraphQLObjectType => {
-    if (obj instanceof Todo) {
+    if (obj.type === 'todo') {
       return GraphQLTodo
-    } else if (obj instanceof User) {
+    } else if (obj.type === 'user') {
       return GraphQLUser
     }
     return null
@@ -54,6 +54,10 @@ const GraphQLTodo = new GraphQLObjectType({
     text: {
       type: new GraphQLNonNull(GraphQLString),
       resolve: (todo: Todo): string => todo.text,
+    },
+    description: {
+      type: GraphQLString,
+      resolve: (todo: Todo): string => todo.description,
     },
     complete: {
       type: new GraphQLNonNull(GraphQLBoolean),

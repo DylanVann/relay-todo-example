@@ -9,6 +9,7 @@ import { MarkAllTodosMutation } from './mutations/MarkAllTodosMutation'
 import { RemoveCompletedTodosMutation } from './mutations/RemoveCompletedTodosMutation'
 import { RemoveTodoMutation } from './mutations/RemoveTodoMutation'
 import { RenameTodoMutation } from './mutations/RenameTodoMutation'
+import { ChangeTodoDescriptionMutation } from './mutations/ChangeTodoDescriptionMutation'
 
 const Query = new GraphQLObjectType({
   name: 'Query',
@@ -23,6 +24,7 @@ const Mutation = new GraphQLObjectType({
   fields: {
     addTodo: AddTodoMutation,
     changeTodoStatus: ChangeTodoStatusMutation,
+    changeTodoDescription: ChangeTodoDescriptionMutation,
     markAllTodos: MarkAllTodosMutation,
     removeCompletedTodos: RemoveCompletedTodosMutation,
     removeTodo: RemoveTodoMutation,

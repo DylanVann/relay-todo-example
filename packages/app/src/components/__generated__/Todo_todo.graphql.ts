@@ -8,6 +8,7 @@ export type Todo_todo = {
     readonly id: string;
     readonly text: string;
     readonly complete: boolean;
+    readonly " $fragmentRefs": FragmentRefs<"TodoDescription_todo">;
     readonly " $refType": "Todo_todo";
 };
 export type Todo_todo$data = Todo_todo;
@@ -44,10 +45,15 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "complete",
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "TodoDescription_todo"
     }
   ],
   "type": "Todo",
   "abstractKey": null
 };
-(node as any).hash = '9688ea4ed5397f08547476ec6b95d8d9';
+(node as any).hash = '56a0030b4c004ac036b6dc309b92cf11';
 export default node;

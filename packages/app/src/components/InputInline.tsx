@@ -46,11 +46,11 @@ export default function InputInline(props: InputInlineProps) {
       onChange={onChange}
     />
   ) : (
-    <div
+    <span
       className={classNames(tw`px-1.5 py-0`, props.className)}
       onClick={onClickedDiv}
     >
-      {props.defaultValue}
-    </div>
+      {props.defaultValue || <>&nbsp;</>}
+    </span>
   )
 }

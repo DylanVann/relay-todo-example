@@ -29,6 +29,7 @@ const AddTodoMutation = mutationWithClientMutationId({
   name: 'AddTodo',
   inputFields: {
     text: { type: new GraphQLNonNull(GraphQLString) },
+    description: { type: GraphQLString },
     userId: { type: new GraphQLNonNull(GraphQLID) },
   },
   outputFields: {
