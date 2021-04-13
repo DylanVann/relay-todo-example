@@ -21,7 +21,7 @@
     "trailingComma": "all"
   },
   "devDependencies": {
-    "concurrently": "^6.0.1",
+    "concurrently": "^6.0.2",
     "patch-package": "^6.4.7",
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.2.1",
